@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PAMF Pediatrician Comparison</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f5f7fa; color: #333; line-height: 1.6; padding: 24px; }
+  .container { max-width: 1100px; margin: 0 auto; }
+  h1 { font-size: 1.8rem; color: #1a1a2e; margin-bottom: 4px; }
+  .subtitle { color: #666; font-size: 0.95rem; margin-bottom: 32px; }
+  .section-title { font-size: 1.3rem; color: #1a1a2e; margin: 32px 0 16px; padding-bottom: 8px; border-bottom: 2px solid #e0e0e0; }
+  .tier-label { display: inline-block; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; padding: 3px 10px; border-radius: 12px; margin-bottom: 16px; }
+  .tier-top { background: #d4edda; color: #155724; }
+  .tier-solid { background: #fff3cd; color: #856404; }
+  .tier-new { background: #e2e3e5; color: #383d41; }
+  .tier-caution { background: #f8d7da; color: #721c24; }
+
+  .card { background: #fff; border-radius: 12px; padding: 20px 24px; margin-bottom: 16px; box-shadow: 0 1px 4px rgba(0,0,0,0.06); border-left: 5px solid #ccc; }
+  .card.top { border-left-color: #28a745; }
+  .card.solid { border-left-color: #ffc107; }
+  .card.new { border-left-color: #adb5bd; }
+  .card.caution { border-left-color: #dc3545; }
+
+  .card-header { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 8px; }
+  .doc-name { font-size: 1.15rem; font-weight: 700; color: #1a1a2e; }
+  .location-badge { font-size: 0.75rem; background: #e8f4fd; color: #0c5c8f; padding: 2px 10px; border-radius: 10px; font-weight: 600; white-space: nowrap; }
+  .rating-badge { font-size: 0.85rem; font-weight: 700; padding: 2px 10px; border-radius: 10px; white-space: nowrap; }
+  .rating-high { background: #d4edda; color: #155724; }
+  .rating-med { background: #fff3cd; color: #856404; }
+  .rating-low { background: #f8d7da; color: #721c24; }
+  .rating-na { background: #e2e3e5; color: #6c757d; }
+
+  .card-details { display: grid; grid-template-columns: 1fr 1fr; gap: 6px 24px; margin-top: 12px; font-size: 0.88rem; }
+  .card-details dt { font-weight: 600; color: #555; }
+  .card-details dd { color: #333; margin-bottom: 4px; }
+  .review-summary { margin-top: 12px; font-size: 0.88rem; padding: 10px 14px; background: #fafafa; border-radius: 8px; }
+  .review-summary strong { color: #1a1a2e; }
+  .pro { color: #155724; }
+  .con { color: #721c24; }
+
+  .recommendation { background: #fff; border-radius: 12px; padding: 24px; margin-top: 32px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); border: 2px solid #28a745; }
+  .recommendation h2 { color: #155724; font-size: 1.2rem; margin-bottom: 12px; }
+  .rec-pick { margin-bottom: 16px; }
+  .rec-pick .pick-num { display: inline-block; width: 28px; height: 28px; background: #28a745; color: #fff; border-radius: 50%; text-align: center; line-height: 28px; font-weight: 700; font-size: 0.85rem; margin-right: 8px; }
+  .rec-pick .pick-name { font-weight: 700; font-size: 1rem; }
+  .rec-pick .pick-why { font-size: 0.9rem; color: #555; margin-top: 4px; margin-left: 36px; }
+
+  .profile-link { display: inline-block; margin-top: 10px; font-size: 0.85rem; font-weight: 600; color: #0c5c8f; text-decoration: none; padding: 4px 12px; border: 1px solid #0c5c8f; border-radius: 6px; transition: background 0.2s, color 0.2s; }
+  .profile-link:hover { background: #0c5c8f; color: #fff; }
+  .profile-link + .profile-link { margin-left: 8px; }
+  .disclaimer { font-size: 0.8rem; color: #888; margin-top: 32px; text-align: center; }
+
+  @media (max-width: 600px) {
+    .card-details { grid-template-columns: 1fr; }
+    .card-header { flex-direction: column; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+<h1>PAMF Pediatrician Comparison</h1>
+<p class="subtitle">Mountain View & Sunnyvale &bull; Research compiled March 2026</p>
+
+<!-- ============ TOP RECOMMENDATIONS ============ -->
+<div class="recommendation">
+  <h2>Top Recommendations</h2>
+
+  <div class="rec-pick">
+    <span class="pick-num">1</span><span class="pick-name">Dr. Lori Kandel</span> &mdash; Sunnyvale
+    <div class="pick-why">4.9&ndash;5.0 stars across all platforms with 20+ reviews. 26 years of experience. Trained at Children's Hospital LA. Consistently described as thoughtful, kind, responsive, and amazing with children. Accepting new patients. The strongest combination of ratings, experience, and availability.</div>
+  </div>
+
+  <div class="rec-pick">
+    <span class="pick-num">2</span><span class="pick-name">Dr. Douglas Kaye</span> &mdash; Sunnyvale
+    <div class="pick-why">4.6&ndash;5.0 stars with 170+ survey responses on Sutter Health alone. 37 years of experience (Wake Forest / U. of Chicago). Praised for exceptional listening, thorough explanations, and long-term patient loyalty. A very safe, experienced choice.</div>
+  </div>
+
+  <div class="rec-pick">
+    <span class="pick-num">3</span><span class="pick-name">Dr. Marisa Cappiello</span> &mdash; Sunnyvale
+    <div class="pick-why">5 stars on Vitals, ~4 on Yelp with 17&ndash;20 reviews. 20+ years experience (Georgetown / Stanford). Known for exceptional follow-up care, weekend calls, and running the Pediatric Growing Healthy Clinic. Great if nutrition/wellness is a priority.</div>
+  </div>
+
+  <div class="rec-pick">
+    <span class="pick-num">4</span><span class="pick-name">Dr. Yi Ding</span> &mdash; Mountain View
+    <div class="pick-why">5.0 stars on every platform reviewed. Trained at UW&ndash;Madison and UCSF. FAAP-designated. Praised for thoroughness, follow-up calls, and empathy with new parents. Fewer reviews but uniformly excellent. May not be accepting new patients &mdash; worth calling.</div>
+  </div>
+
+  <div class="rec-pick">
+    <span class="pick-num">5</span><span class="pick-name">Dr. Lucy Schoen</span> &mdash; Mountain View
+    <div class="pick-why">5.0 on Yelp (11 reviews, nearly all 5-star). Stanford-trained. Patients love her warmth with kids and communication style. Also may not be accepting new patients &mdash; confirm with office.</div>
+  </div>
+</div>
+
+<!-- ============ TOP TIER ============ -->
+<h2 class="section-title">All Doctors &mdash; Detailed Profiles</h2>
+<span class="tier-label tier-top">Top Tier &mdash; Highly Rated & Experienced</span>
+
+<!-- Lori Kandel -->
+<div class="card top">
+  <div class="card-header">
+    <div>
+      <span class="doc-name">Dr. Lori Kandel, MD</span>
+      <span class="location-badge">Sunnyvale</span>
+    </div>
+    <span class="rating-badge rating-high">4.9&ndash;5.0 ★</span>
+  </div>
+  <dl class="card-details">
+    <dt>Medical School</dt><dd>Sackler School of Medicine, Tel Aviv University (1999)</dd>
+    <dt>Residency</dt><dd>Children's Hospital Los Angeles</dd>
+    <dt>Board Certified</dt><dd>Pediatrics (ABP)</dd>
+    <dt>Experience</dt><dd>26 years</dd>
+    <dt>Languages</dt><dd>English, Spanish, Chinese</dd>
+    <dt>Accepting New Patients</dt><dd>Yes</dd>
+  </dl>
+  <div class="review-summary">
+    <strong>Reviews:</strong> Sharecare 5.0/5 (4 reviews) &bull; Healthgrades 5.0/5 (4 reviews) &bull; Vitals 4.9/5 (8 reviews) &bull; CareDash 5.0/5<br>
+    <span class="pro">Strengths:</span> "Most thoughtful, kind, responsive, and impressive doctor." Amazing with children. Thorough, explains conditions well.<br>
+    <span class="con">Concerns:</span> None identified.
+  </div>
+  <a class="profile-link" href="https://www.sutterhealth.org/find-provider/dr-lori-kandel-1046239400" target="_blank">Sutter Health Profile</a>
+</div>
+
+<!-- Douglas Kaye -->
+<div class="card top">
+  <div class="card-header">
+    <div>
+      <span class="doc-name">Dr. Douglas Kaye, MD</span>
+      <span class="location-badge">Sunnyvale</span>
+    </div>
+    <span class="rating-badge rating-high">4.6&ndash;5.0 ★</span>
+  </div>
+  <dl class="card-details">
+    <dt>Medical School</dt><dd>Wake Forest School of Medicine (1988)</dd>
+    <dt>Residency</dt><dd>University of Chicago Hospitals</dd>
+    <dt>Board Certified</dt><dd>Pediatrics (ABP)</dd>
+    <dt>Experience</dt><dd>37 years</dd>
+    <dt>Languages</dt><dd>English</dd>
+    <dt>Accepting New Patients</dt><dd>Yes</dd>
+  </dl>
+  <div class="review-summary">
+    <strong>Reviews:</strong> Sutter Health 4.7/5 (173 surveys) &bull; Sharecare 5.0/5 (6 reviews) &bull; Vitals 4.6/5 (11 reviews) &bull; Yelp 17 reviews<br>
+    <span class="pro">Strengths:</span> Exceptional listener and communicator. Patients report 7+ year loyalty. Children feel comfortable. Prompt return calls.<br>
+    <span class="con">Concerns:</span> None identified.
+  </div>
+  <a class="profile-link" href="https://www.sutterhealth.org/find-provider/dr-douglas-kaye-1046235207" target="_blank">Sutter Health Profile</a>
+</div>
+
+<!-- Marisa Cappiello -->
+<div class="card top">
+  <div class="card-header">
+    <div>
+      <span class="doc-name">Dr. Marisa Cappiello, MD</span>
+      <span class="location-badge">Sunnyvale</span>
+    </div>
+    <span class="rating-badge rating-high">4.0&ndash;5.0 ★</span>
+  </div>
+  <dl class="card-details">
+    <dt>Medical School</dt><dd>Georgetown University (2003)</dd>
+    <dt>Residency</dt><dd>Stanford / Lucile Packard Children's Hospital</dd>
+    <dt>Board Certified</dt><dd>Pediatrics (ABP)</dd>
+    <dt>Experience</dt><dd>20+ years</dd>
+    <dt>Languages</dt><dd>English</dd>
+    <dt>Accepting New Patients</dt><dd>Yes</dd>
+  </dl>
+  <div class="review-summary">
+    <strong>Reviews:</strong> Vitals 5.0/5 (3 reviews) &bull; Yelp ~4/5 (17&ndash;20 reviews) &bull; US News 34 reviews<br>
+    <span class="pro">Strengths:</span> Goes above and beyond &mdash; weekend calls, same-day follow-ups. Runs Pediatric Growing Healthy Clinic. Responsive on PAMF app.<br>
+    <span class="con">Concerns:</span> None identified.
+  </div>
+  <a class="profile-link" href="https://www.sutterhealth.org/find-provider/dr-marisa-cappiello-1046239975" target="_blank">Sutter Health Profile</a>
+</div>
+
+<!-- Yi Ding -->
+<div class="card top">
+  <div class="card-header">
+    <div>
+      <span class="doc-name">Dr. Yi Ding, MD, FAAP</span>
+      <span class="location-badge">Mountain View</span>
+    </div>
+    <span class="rating-badge rating-high">5.0 ★</span>
+  </div>
+  <dl class="card-details">
+    <dt>Medical School</dt><dd>University of Wisconsin (2016)</dd>
+    <dt>Residency</dt><dd>UCSF Benioff Children's Hospital Oakland</dd>
+    <dt>Board Certified</dt><dd>Pediatrics (ABP, FAAP)</dd>
+    <dt>Experience</dt><dd>~10 years</dd>
+    <dt>Languages</dt><dd>English</dd>
+    <dt>Accepting New Patients</dt><dd>Not currently; siblings OK &mdash; call to confirm for newborns</dd>
+  </dl>
+  <div class="review-summary">
+    <strong>Reviews:</strong> Yelp 5.0/5 (2 reviews) &bull; Healthgrades 5.0/5 &bull; Sharecare 5.0/5 (2 reviews)<br>
+    <span class="pro">Strengths:</span> Thorough examiner. Follows up days later. Detailed treatment plans with reasoning. Great with new-parent anxiety.<br>
+    <span class="con">Concerns:</span> Fewer total reviews (but all excellent). May not be accepting new patients.
+  </div>
+  <a class="profile-link" href="https://www.sutterhealth.org/find-provider/dr-yi-ding-1046246437" target="_blank">Sutter Health Profile</a>
+</div>
+
+<!-- Lucy Schoen -->
+<div class="card top">
+  <div class="card-header">
+    <div>
+      <span class="doc-name">Dr. Lucy Schoen, MD</span>
+      <span class="location-badge">Mountain View</span>
+    </div>
+    <span class="rating-badge rating-high">5.0 ★</span>
+  </div>
+  <dl class="card-details">
+    <dt>Medical School</dt><dd>Stanford University (2015)</dd>
+    <dt>Residency</dt><dd>Stanford / Lucile Packard Children's Hospital</dd>
+    <dt>Board Certified</dt><dd>Pediatrics (ABP)</dd>
+    <dt>Experience</dt><dd>~10 years</dd>
+    <dt>Languages</dt><dd>English</dd>
+    <dt>Accepting New Patients</dt><dd>Not currently &mdash; call to confirm for newborns</dd>
+  </dl>
+  <div class="review-summary">
+    <strong>Reviews:</strong> Yelp 5.0/5 (11 reviews &mdash; 10 five-star, 1 four-star)<br>
+    <span class="pro">Strengths:</span> Warm, loving, caring. Explains things well. Partners with families. Evidence-based care.<br>
+    <span class="con">Concerns:</span> May not be accepting new patients.
+  </div>
+  <a class="profile-link" href="https://www.sutterhealth.org/find-provider/dr-lucy-e-schoen-1046246677" target="_blank">Sutter Health Profile</a>
+</div>
+
+<!-- Jane Auh -->
+<div class="card top">
+  <div class="card-header">
+    <div>
+      <span class="doc-name">Dr. Jane Auh, MD</span>
+      <span class="location-badge">Mountain View</span>
+    </div>
+    <span class="rating-badge rating-high">4.2&ndash;5.0 ★</span>
+  </div>
+  <dl class="card-details">
+    <dt>Medical School</dt><dd>Northwestern University Feinberg (1997)</dd>
+    <dt>Residency</dt><dd>McGaw Medical Center of Northwestern</dd>
+    <dt>Board Certified</dt><dd>Pediatrics (ABP)</dd>
+    <dt>Experience</dt><dd>25&ndash;29 years</dd>
+    <dt>Languages</dt><dd>English, Spanish, Korean, Chinese</dd>
+    <dt>Accepting New Patients</dt><dd>Yes + telehealth</dd>
+  </dl>
+  <div class="review-summary">
+    <strong>Reviews:</strong> Vitals 5.0/5 (4 reviews) &bull; WebMD 4.5/5 &bull; Healthgrades 4.2/5 &bull; Yelp 12 reviews<br>
+    <span class="pro">Strengths:</span> 10+ year patient loyalty. Kind, caring, enthusiastic. Available for questions anytime. Multilingual.<br>
+    <span class="con">Concerns:</span> One isolated negative review on WebMD.
+  </div>
+  <a class="profile-link" href="https://www.sutterhealth.org/find-provider/dr-jane-auh-1046237267" target="_blank">Sutter Health Profile</a>
+</div>
+
+<!-- ============ SOLID TIER ============ -->
+<span class="tier-label tier-solid">Solid &mdash; Good Ratings, Fewer Reviews</span>
+
+<!-- Liang Huan -->
+<div class="card solid">
+  <div class="card-header">
+    <div>
+      <span class="doc-name">Dr. Liang Huan, MD</span>
+      <span class="location-badge">Sunnyvale</span>
+    </div>
+    <span class="rating-badge rating-high">4.6&ndash;5.0 ★</span>
+  </div>
+  <dl class="card-details">
+    <dt>Medical School</dt><dd>Albert Einstein College of Medicine (2010)</dd>
+    <dt>Residency</dt><dd>Children's Hospital Los Angeles</dd>
+    <dt>Board Certified</dt><dd>Pediatrics (ABP)</dd>
+    <dt>Experience</dt><dd>15 years</dd>
+    <dt>Languages</dt><dd>English, Chinese, Spanish</dd>
+    <dt>Accepting New Patients</dt><dd>Yes</dd>
+  </dl>
+  <div class="review-summary">
+    <strong>Reviews:</strong> Sharecare 5.0/5 (6 reviews) &bull; Vitals 4.6/5 (8 reviews)<br>
+    <span class="pro">Strengths:</span> Consistently high ratings. Preventive medicine focus. Multilingual. Also practices in Palo Alto and Mountain View.<br>
+    <span class="con">Concerns:</span> None identified, but fewer total reviews.
+  </div>
+  <a class="profile-link" href="https://www.sutterhealth.org/find-provider/dr-liang-huan-1046239178" target="_blank">Sutter Health Profile</a>
+</div>
+
+<!-- Oluwatosin Folorunso -->
+<div class="card solid">
+  <div class="card-header">
+    <div>
+      <span class="doc-name">Dr. Oluwatosin Folorunso, MD</span>
+      <span class="location-badge">Mountain View</span>
+    </div>
+    <span class="rating-badge rating-high">5.0 ★</span>
+  </div>
+  <dl class="card-details">
+    <dt>Medical School</dt><dd>Mount Sinai / St. George's University (2011)</dd>
+    <dt>Residency</dt><dd>St. Joseph's Regional Medical Center</dd>
+    <dt>Board Certified</dt><dd>Pediatrics (ABP)</dd>
+    <dt>Experience</dt><dd>~14 years</dd>
+    <dt>Languages</dt><dd>English</dd>
+    <dt>Accepting New Patients</dt><dd>Yes + telehealth</dd>
+  </dl>
+  <div class="review-summary">
+    <strong>Reviews:</strong> Healthgrades 5.0/5 &bull; Vitals 5.0/5 (1 review) &bull; CareDash 5.0/5<br>
+    <span class="pro">Strengths:</span> Perfect scores everywhere. Focus on breastfeeding, newborns, nutrition, and preventive medicine. Accepts 25 insurance plans.<br>
+    <span class="con">Concerns:</span> Very few reviews total.
+  </div>
+  <a class="profile-link" href="https://www.sutterhealth.org/find-provider/dr-oluwatosin-e-folorunso-1046249840" target="_blank">Sutter Health Profile</a>
+</div>
+
+<!-- Andrew Ng -->
+<div class="card solid">
+  <div class="card-header">
+    <div>
+      <span class="doc-name">Dr. Andrew Ng, MD</span>
+      <span class="location-badge">Sunnyvale</span>
+    </div>
+    <span class="rating-badge rating-high">4.6 ★</span>
+  </div>
+  <dl class="card-details">
+    <dt>Medical School</dt><dd>University of Cincinnati (2013)</dd>
+    <dt>Residency</dt><dd>Nationwide Children's Hospital / Ohio State</dd>
+    <dt>Board Certified</dt><dd>Pediatrics (ABP)</dd>
+    <dt>Experience</dt><dd>12 years</dd>
+    <dt>Languages</dt><dd>English, Cantonese</dd>
+    <dt>Accepting New Patients</dt><dd>May not be &mdash; call to confirm</dd>
+  </dl>
+  <div class="review-summary">
+    <strong>Reviews:</strong> Sutter Health 4.6/5 (123 surveys) &bull; Yelp 10 reviews<br>
+    <span class="pro">Strengths:</span> Great with first-time parents. Attentive. Good with children. Offers telehealth.<br>
+    <span class="con">Concerns:</span> May not be accepting new patients.
+  </div>
+  <a class="profile-link" href="https://www.sutterhealth.org/find-provider/dr-andrew-m-ng-1046232888" target="_blank">Sutter Health Profile</a>
+</div>
+
+<!-- Joyce Ang -->
+<div class="card solid">
+  <div class="card-header">
+    <div>
+      <span class="doc-name">Dr. Joyce Ang, MD</span>
+      <span class="location-badge">Sunnyvale</span>
+    </div>
+    <span class="rating-badge rating-med">Limited data</span>
+  </div>
+  <dl class="card-details">
+    <dt>Medical School</dt><dd>Michigan State University (2015)</dd>
+    <dt>Residency</dt><dd>Lucile Packard Children's Hospital Stanford</dd>
+    <dt>Board Certified</dt><dd>Pediatrics (ABP)</dd>
+    <dt>Experience</dt><dd>10 years</dd>
+    <dt>Languages</dt><dd>English, conversational Mandarin</dd>
+    <dt>Accepting New Patients</dt><dd>Check with office</dd>
+  </dl>
+  <div class="review-summary">
+    <strong>Reviews:</strong> Yelp 4 reviews &bull; Limited data on other platforms<br>
+    <span class="pro">Strengths:</span> Sweet with young children. Thoughtful treatment plans. Stanford-trained.<br>
+    <span class="con">Concerns:</span> Very few reviews available.
+  </div>
+  <a class="profile-link" href="https://www.sutterhealth.org/find-provider/dr-joyce-ang-1046246395" target="_blank">Sutter Health Profile</a>
+</div>
+
+<!-- Kathryn Wheeler -->
+<div class="card solid">
+  <div class="card-header">
+    <div>
+      <span class="doc-name">Dr. Kathryn Wheeler, MD</span>
+      <span class="location-badge">Sunnyvale</span>
+    </div>
+    <span class="rating-badge rating-med">4.3 ★</span>
+  </div>
+  <dl class="card-details">
+    <dt>Medical School</dt><dd>University of Pittsburgh (2005)</dd>
+    <dt>Residency</dt><dd>Not specified</dd>
+    <dt>Board Certified</dt><dd>Pediatrics (ABP)</dd>
+    <dt>Experience</dt><dd>20+ years</dd>
+    <dt>Languages</dt><dd>English</dd>
+    <dt>Accepting New Patients</dt><dd>Yes</dd>
+  </dl>
+  <div class="review-summary">
+    <strong>Reviews:</strong> Sharecare 4.3/5 (7 reviews) &bull; Healthgrades 4.3/5<br>
+    <span class="pro">Strengths:</span> Explains conditions well. Active in community (AAP, school volunteer, Girl Scout leader). Good communicator via PAMF app.<br>
+    <span class="con">Concerns:</span> Moderate ratings compared to top tier.
+  </div>
+  <a class="profile-link" href="https://www.sutterhealth.org/find-provider/dr-kathryn-wheeler-1046238462" target="_blank">Sutter Health Profile</a>
+</div>
+
+<!-- ============ TOO NEW / LIMITED DATA ============ -->
+<span class="tier-label tier-new">Newer Doctors &mdash; Limited Review Data</span>
+
+<!-- Christine Chang -->
+<div class="card new">
+  <div class="card-header">
+    <div>
+      <span class="doc-name">Dr. Christine Chang, MD</span>
+      <span class="location-badge">Sunnyvale</span>
+    </div>
+    <span class="rating-badge rating-na">Limited data</span>
+  </div>
+  <dl class="card-details">
+    <dt>Medical School</dt><dd>University of Pennsylvania (2015)</dd>
+    <dt>Residency</dt><dd>Children's Hospital Los Angeles</dd>
+    <dt>Fellowship</dt><dd>Stanford &mdash; Pediatric Hospital Medicine</dd>
+    <dt>Board Certified</dt><dd>Pediatrics (ABP, AAP Fellow)</dd>
+    <dt>Experience</dt><dd>~10 years</dd>
+    <dt>Accepting New Patients</dt><dd>May not be &mdash; check with office</dd>
+  </dl>
+  <div class="review-summary">
+    <strong>Reviews:</strong> Very limited public reviews<br>
+    <span class="pro">Strengths:</span> Elite training (Penn, CHLA, Stanford fellowship). Telehealth available.<br>
+    <span class="con">Concerns:</span> Not enough data to fully assess. May not be accepting new patients.
+  </div>
+  <a class="profile-link" href="https://www.sutterhealth.org/find-provider/dr-christine-s-chang-1046246377" target="_blank">Sutter Health Profile</a>
+</div>
+
+<!-- Zara Iqbal -->
+<div class="card new">
+  <div class="card-header">
+    <div>
+      <span class="doc-name">Dr. Zara Iqbal, MD</span>
+      <span class="location-badge">Sunnyvale</span>
+    </div>
+    <span class="rating-badge rating-na">Limited data</span>
+  </div>
+  <dl class="card-details">
+    <dt>Medical School</dt><dd>Stanford / Rosalind Franklin (sources vary)</dd>
+    <dt>Residency</dt><dd>Lucile Packard Children's Hospital Stanford</dd>
+    <dt>Chief Residency</dt><dd>UCSF (2020&ndash;2021)</dd>
+    <dt>Board Certified</dt><dd>Pediatrics (ABP)</dd>
+    <dt>Experience</dt><dd>6&ndash;10 years</dd>
+    <dt>Accepting New Patients</dt><dd>Yes</dd>
+  </dl>
+  <div class="review-summary">
+    <strong>Reviews:</strong> Very limited public reviews<br>
+    <span class="pro">Strengths:</span> Strong training. Chief resident at UCSF. Telehealth available. Accepting new patients.<br>
+    <span class="con">Concerns:</span> Not enough data to fully assess.
+  </div>
+  <a class="profile-link" href="https://www.sutterhealth.org/find-provider/dr-zara-q-iqbal-1046250903" target="_blank">Sutter Health Profile</a>
+</div>
+
+<!-- Mariam Haq -->
+<div class="card new">
+  <div class="card-header">
+    <div>
+      <span class="doc-name">Dr. Mariam Haq, MD</span>
+      <span class="location-badge">Sunnyvale</span>
+    </div>
+    <span class="rating-badge rating-na">Too new</span>
+  </div>
+  <dl class="card-details">
+    <dt>Medical School</dt><dd>Geisel School of Medicine at Dartmouth (2021)</dd>
+    <dt>Residency</dt><dd>Not detailed</dd>
+    <dt>Board Certified</dt><dd>Not confirmed</dd>
+    <dt>Experience</dt><dd>~4 years</dd>
+    <dt>Languages</dt><dd>English</dd>
+    <dt>Accepting New Patients</dt><dd>Yes</dd>
+  </dl>
+  <div class="review-summary">
+    <strong>Reviews:</strong> No reviews on Healthgrades. Minimal data elsewhere.<br>
+    <span class="pro">Strengths:</span> Dartmouth-trained. Evidence-based approach. Accepting new patients.<br>
+    <span class="con">Concerns:</span> Very early career. No review track record yet.
+  </div>
+  <a class="profile-link" href="https://www.sutterhealth.org/find-provider/dr-mariam-haq-1089981673" target="_blank">Sutter Health Profile</a>
+</div>
+
+<!-- Kathryn Mosso -->
+<div class="card new">
+  <div class="card-header">
+    <div>
+      <span class="doc-name">Dr. Kathryn Mosso, MD</span>
+      <span class="location-badge">Sunnyvale</span>
+    </div>
+    <span class="rating-badge rating-na">Limited data</span>
+  </div>
+  <dl class="card-details">
+    <dt>Medical School</dt><dd>University of Wisconsin (2018)</dd>
+    <dt>Residency</dt><dd>Children's Hospital Los Angeles</dd>
+    <dt>Board Certified</dt><dd>Pediatrics (ABP)</dd>
+    <dt>Experience</dt><dd>~7 years</dd>
+    <dt>Languages</dt><dd>English</dd>
+    <dt>Accepting New Patients</dt><dd>Yes</dd>
+  </dl>
+  <div class="review-summary">
+    <strong>Reviews:</strong> Very limited public reviews<br>
+    <span class="pro">Strengths:</span> CHLA-trained. Recent training may mean up-to-date knowledge. Accepting new patients.<br>
+    <span class="con">Concerns:</span> Not enough data to fully assess.
+  </div>
+  <a class="profile-link" href="https://www.sutterhealth.org/find-doctor/dr-kathryn-l-mosso" target="_blank">Sutter Health Profile</a>
+</div>
+
+<!-- ============ CAUTION TIER ============ -->
+<span class="tier-label tier-caution">Proceed with Caution &mdash; Mixed Reviews or Concerns</span>
+
+<!-- Melanie Atmadja -->
+<div class="card caution">
+  <div class="card-header">
+    <div>
+      <span class="doc-name">Dr. Melanie Atmadja, MD</span>
+      <span class="location-badge">Mountain View</span>
+    </div>
+    <span class="rating-badge rating-low">1.0&ndash;3.5 ★</span>
+  </div>
+  <dl class="card-details">
+    <dt>Medical School</dt><dd>Stanford University (2012)</dd>
+    <dt>Residency</dt><dd>Stanford University</dd>
+    <dt>Board Certified</dt><dd>Pediatrics (ABP)</dd>
+    <dt>Experience</dt><dd>~12 years</dd>
+    <dt>Accepting New Patients</dt><dd>Not currently; newborns &amp; siblings OK</dd>
+  </dl>
+  <div class="review-summary">
+    <strong>Reviews:</strong> Yelp 3.5/5 (26 reviews) &bull; Sharecare 2.5/5 (14 reviews) &bull; Vitals 1/5 (1 review) &bull; Healthline 2.6/5 (13 reviews)<br>
+    <span class="pro">Strengths:</span> Supportive and responsive to emails. Stanford-trained.<br>
+    <span class="con">Concerns:</span> Multiple reports of aggressive billing practices &mdash; charges of $700+ from routine visits. Bedside manner concerns.
+  </div>
+  <a class="profile-link" href="https://www.sutterhealth.org/find-provider/dr-melanie-atmadja-1046238975" target="_blank">Sutter Health Profile</a>
+</div>
+
+<!-- Elizabeth Huffman -->
+<div class="card caution">
+  <div class="card-header">
+    <div>
+      <span class="doc-name">Dr. Elizabeth Huffman, MD</span>
+      <span class="location-badge">Mountain View</span>
+    </div>
+    <span class="rating-badge rating-low">3.7&ndash;3.8 ★</span>
+  </div>
+  <dl class="card-details">
+    <dt>Medical School</dt><dd>Ohio State University (2010)</dd>
+    <dt>Residency</dt><dd>Stanford University</dd>
+    <dt>Board Certified</dt><dd>Pediatrics (ABP)</dd>
+    <dt>Experience</dt><dd>15+ years</dd>
+    <dt>Accepting New Patients</dt><dd>Yes</dd>
+  </dl>
+  <div class="review-summary">
+    <strong>Reviews:</strong> Healthgrades 3.8/5 (6 reviews) &bull; Birdeye 3.7/5 (6 reviews)<br>
+    <span class="pro">Strengths:</span> Friendly, knowledgeable, responsive via email.<br>
+    <span class="con">Concerns:</span> Billing issues &mdash; patients report $200&ndash;$240 charges for brief consultations and lab result notifications.
+  </div>
+  <a class="profile-link" href="https://www.sutterhealth.org/find-provider/dr-elizabethanne-huffman-1046234534" target="_blank">Sutter Health Profile</a>
+</div>
+
+<!-- Katharine Padrez -->
+<div class="card caution">
+  <div class="card-header">
+    <div>
+      <span class="doc-name">Dr. Katharine Padrez, MD</span>
+      <span class="location-badge">Mountain View</span>
+    </div>
+    <span class="rating-badge rating-low">3.4 ★</span>
+  </div>
+  <dl class="card-details">
+    <dt>Medical School</dt><dd>UCSF (2009)</dd>
+    <dt>Residency</dt><dd>UCSF</dd>
+    <dt>Board Certified</dt><dd>Pediatrics (ABP)</dd>
+    <dt>Experience</dt><dd>16 years</dd>
+    <dt>Accepting New Patients</dt><dd>Not currently; siblings OK</dd>
+  </dl>
+  <div class="review-summary">
+    <strong>Reviews:</strong> Healthgrades 3.4/5 &bull; Sharecare 3.4/5 (5 reviews) &bull; Yelp 11 reviews<br>
+    <span class="pro">Strengths:</span> UCSF-trained. Focus on asthma, breastfeeding, child development.<br>
+    <span class="con">Concerns:</span> Below-average ratings. Limited positive review data. Not accepting new patients.
+  </div>
+  <a class="profile-link" href="https://www.sutterhealth.org/find-provider/dr-katharine-padrez-1046238480" target="_blank">Sutter Health Profile</a>
+</div>
+
+<!-- Patrick Chang -->
+<div class="card caution">
+  <div class="card-header">
+    <div>
+      <span class="doc-name">Dr. Patrick Chang, MD</span>
+      <span class="location-badge">Sunnyvale</span>
+    </div>
+    <span class="rating-badge rating-med">4.3 ★ (polarizing)</span>
+  </div>
+  <dl class="card-details">
+    <dt>Medical School</dt><dd>Chicago Medical School / Rosalind Franklin (2000)</dd>
+    <dt>Residency</dt><dd>Loyola University Chicago</dd>
+    <dt>Fellowship</dt><dd>Pediatric Hematology-Oncology, UCSF</dd>
+    <dt>Board Certified</dt><dd>Pediatrics + Pediatric Hematology-Oncology</dd>
+    <dt>Experience</dt><dd>20+ years</dd>
+    <dt>Languages</dt><dd>English, Mandarin</dd>
+    <dt>Accepting New Patients</dt><dd>Yes</dd>
+  </dl>
+  <div class="review-summary">
+    <strong>Reviews:</strong> Vitals 4.3/5 (4 reviews)<br>
+    <span class="pro">Strengths:</span> Very experienced. Subspecialty expertise. Good availability for urgent visits. Never rushes.<br>
+    <span class="con">Concerns:</span> Polarizing reviews. Some describe him as "smug" and "dismissive." Primary specialty is hematology-oncology, not general pediatrics.
+  </div>
+  <a class="profile-link" href="https://www.sutterhealth.org/find-provider/dr-patrick-chang-1046240449" target="_blank">Sutter Health Profile</a>
+</div>
+
+<p class="disclaimer">
+  This research was compiled from publicly available sources including Sutter Health, Healthgrades, Vitals, Yelp, WebMD, Sharecare, CareDash, US News, and Zocdoc. Ratings and availability may change. Always confirm directly with the PAMF office at (408) 730-4251 (Sunnyvale) or (650) 934-7956 (Mountain View).
+</p>
+
+</div>
+</body>
+</html>
